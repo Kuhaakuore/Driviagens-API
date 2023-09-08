@@ -7,8 +7,14 @@ async function createPassenger(firstName, lastName) {
   );
 }
 
+async function getPassengerById(id) {
+  const result = await db.query(`SELECT * FROM passengers WHERE id = $1`, [id]);
+  return result.rows[0];
+}
+
 const passengersRepository = {
   createPassenger,
+  getPassengerById,
 };
 
 export default passengersRepository;

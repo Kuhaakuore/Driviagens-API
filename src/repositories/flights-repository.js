@@ -7,6 +7,11 @@ async function createFlight(origin, destination, date) {
   );
 }
 
-const flightsRepository = { createFlight };
+async function getFlightById(id) {
+  const result = await db.query(`SELECT * FROM flights WHERE id = $1`, [id]);
+  return result.rows[0];
+}
+
+const flightsRepository = { createFlight, getFlightById };
 
 export default flightsRepository;
