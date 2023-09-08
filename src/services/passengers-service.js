@@ -1,5 +1,5 @@
 import { incompleteDataError } from "../errors/incompleteData.js";
-import { passengerSchema } from "../schemas/passengerSchema.js";
+import { passengerSchema } from "../schemas/passengersSchema.js";
 import passengersRepository from "../repositories/passengers-repository.js";
 
 async function createPassenger(body) {
