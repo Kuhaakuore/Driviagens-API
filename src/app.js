@@ -3,6 +3,7 @@ import "express-async-errors";
 import dotenv from "dotenv";
 import passengersRouter from "./routers/passengers-router.js";
 import citiesRouter from "./routers/cities-router.js";
+import flightsRouter from "./routers/flights-router.js";
 import errorHandler from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -13,6 +14,7 @@ const PORT = process.env.PORT;
 app.use(json());
 app.use(passengersRouter);
 app.use(citiesRouter);
+app.use(flightsRouter);
 app.use(errorHandler);
 
 

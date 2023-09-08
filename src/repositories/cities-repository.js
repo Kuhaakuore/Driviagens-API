@@ -10,6 +10,12 @@ async function getCity(name) {
   return result.rows[0];
 }
 
-const citiesRepository = { createCity, getCity};
+async function getCityById(id) {
+  const result = await db.query(`SELECT * FROM cities WHERE id = $1`, [id]);
+
+  return result.rows[0];
+}
+
+const citiesRepository = { createCity, getCity, getCityById};
 
 export default citiesRepository;
