@@ -8,6 +8,13 @@ async function createFlight(req, res) {
   return res.sendStatus(httpStatus.CREATED);
 }
 
-const flightsController = { createFlight };
+async function getFlights(req, res) {
+  const queries = req.query;
+  
+  const flights = await flightsService.getFlights(queries);
+  return res.send(flights).status(200);
+}
+
+const flightsController = { createFlight, getFlights };
 
 export default flightsController;

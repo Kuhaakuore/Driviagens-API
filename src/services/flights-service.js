@@ -3,8 +3,9 @@ import { conflictError } from "../errors/conflict.js";
 import { notFoundError } from "../errors/notFound.js";
 import citiesRepository from "../repositories/cities-repository.js";
 import flightsRepository from "../repositories/flights-repository.js";
-import { flightSchema } from "../schemas/flights-schema.js";
+import { flightDatesSchema, flightSchema } from "../schemas/flights-schema.js";
 import dayjs from "dayjs";
+import { invalidDatesError } from "../errors/invalidDates.js";
 
 async function createFlight(body) {
   const validation = flightSchema.validate(body, { abortEarly: false });
@@ -29,6 +30,38 @@ async function createFlight(body) {
   return flightsRepository.createFlight(origin, destination, date);
 }
 
-const flightsService = { createFlight };
+async function getFlights(queries) {
+  const { origin, destination } = queries;
+  const { "smaller-date": smallerDate } = queries;
+  const { "bigger-date": biggerDate } = queries;
+
+  const validation = flightDatesSchema.validate(
+    { biggerDate, smallerDate },
+    { abortEarly: false }
+  );
+
+  if (validation.error) throw incompleteDataError();
+
+  if ((biggerDate && !smallerDate) || (!biggerDate && smallerDate))
+    throw incompleteDataError();
+
+  if (biggerDate < smallerDate)
+    throw invalidDatesError(smallerDate, biggerDate);
+
+  let originId = undefined;
+  let destinationId = undefined;
+
+  if (origin) originId = await citiesRepository.getCityId(origin);
+  if (destination) destinationId = await citiesRepository.getCityId(destination);
+
+  return flightsRepository.getFlights(
+    originId,
+    destinationId,
+    biggerDate,
+    smallerDate
+  );
+}
+
+const flightsService = { createFlight, getFlights };
 
 export default flightsService;

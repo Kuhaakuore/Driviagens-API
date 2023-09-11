@@ -16,6 +16,9 @@ export default function errorHandler(error, req, res, next) {
     case "invalidId":
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
 
+    case "invalidDates":
+      return res.status(httpStatus.BAD_REQUEST).send(error.message);
+
     default:
       return res
         .status(httpStatus.INTERNAL_SERVER_ERROR)

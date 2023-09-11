@@ -7,3 +7,8 @@ export const flightSchema = Joi.object({
   destination: Joi.number().integer().required(),
   date: Joi.date().format("DD-MM-YYYY").required(),
 });
+
+export const flightDatesSchema = Joi.object({
+  biggerDate: Joi.date().format("DD-MM-YYYY"),
+  smallerDate: Joi.date().format("DD-MM-YYYY"),
+});
