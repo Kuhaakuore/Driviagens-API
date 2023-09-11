@@ -10,7 +10,7 @@ import travelsRouter from "./routers/travels-router.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.use(json());
 app.use(passengersRouter);
