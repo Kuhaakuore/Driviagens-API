@@ -1,5 +1,5 @@
 import { Router } from "express";
-import travelsController from "../controllers/travles-controller.js";
+import travelsController from "../controllers/travels-controller.js";
 import validateSchema from "../middlewares/validateSchema.js";
 import { travelSchema } from "../schemas/travels-schema.js";
 
