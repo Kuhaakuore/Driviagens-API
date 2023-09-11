@@ -37,7 +37,7 @@ async function getFlights(originId, destinationId, smallerDate, biggerDate) {
     query += ` AND date <= $${values.length - 1} AND date >= $${values.length}`;
   }
 
-  query += ` ORDER BY date ASC`;
+  query += ` ORDER BY date ASC;`;
 
   const result = await db.query(query, values);
   const flights = result.rows.map((flight) => {

@@ -19,6 +19,9 @@ export default function errorHandler(error, req, res, next) {
     case "invalidDates":
       return res.status(httpStatus.BAD_REQUEST).send(error.message);
 
+    case "tooManyResults":
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message);
+
     default:
       return res
         .status(httpStatus.INTERNAL_SERVER_ERROR)
