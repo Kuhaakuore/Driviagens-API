@@ -13,7 +13,14 @@ async function getFlightById(id) {
   return result.rows[0];
 }
 
-async function getFlights(originId, destinationId, smallerDate, biggerDate) {
+async function getFlights(
+  originId,
+  destinationId,
+  smallerDate,
+  biggerDate,
+  offset,
+  limit
+) {
   let query = `SELECT flights.id, origin.name AS origin, destination.name AS destination, date
                 FROM flights
                 JOIN cities AS origin ON flights.origin = origin.id
@@ -37,7 +44,17 @@ async function getFlights(originId, destinationId, smallerDate, biggerDate) {
     query += ` AND date <= $${values.length - 1} AND date >= $${values.length}`;
   }
 
-  query += ` ORDER BY date ASC;`;
+  query += ` ORDER BY date ASC`;
+
+  if (offset) {
+    values.push(offset);
+    query += ` OFFSET $${values.length}`;
+  }
+
+  if (limit) {
+    values.push(limit);
+    query += ` LIMIT $${values.length}`;
+  }
 
   const result = await db.query(query, values);
   const flights = result.rows.map((flight) => {

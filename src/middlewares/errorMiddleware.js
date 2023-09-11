@@ -10,13 +10,10 @@ export default function errorHandler(error, req, res, next) {
     case "notFound":
       return res.status(httpStatus.NOT_FOUND).send(error.message);
 
-    case "incompleteData":
+    case "unprocessableEntity":
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
 
-    case "invalidId":
-      return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
-
-    case "invalidDates":
+    case "badRequest":
       return res.status(httpStatus.BAD_REQUEST).send(error.message);
 
     case "tooManyResults":

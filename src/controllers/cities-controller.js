@@ -5,6 +5,7 @@ async function createCity(req, res) {
   const { body } = req;
 
   await citiesService.createCity(body);
+
   return res.sendStatus(httpStatus.CREATED);
 }
 
